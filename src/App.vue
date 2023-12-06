@@ -6,14 +6,13 @@ const result = ref('')
 
 async function wxInit() {
   const res = await axios.get('https://service-bg08w8zt-1302038052.bj.tencentapigw.com/release/config', {
-  // const res = await axios.get('http://10.0.0.4:9000/config', {
     params: {
       url: location.href.split('#')[0]
     }
   })
   window.wx.config({
     debug: true,
-    appId: 'wx03ec3333acc0b717',
+    appId: 'wxaffacb192aae22ff',
     timestamp: res.data.timestamp,
     nonceStr: res.data.nonceStr,
     signature: res.data.signature,
