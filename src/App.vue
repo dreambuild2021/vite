@@ -1,30 +1,42 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import axios from 'axios'
+
+async function wxInit() {
+  const res = await axios.get('https://service-bg08w8zt-1302038052.bj.tencentapigw.com/release/config')
+  wx.config({
+    debug: true,
+    appId: 'wx03ec3333acc0b717',
+    timestamp: res.data.timestamp,
+    nonceStr: res.data.nonceStr,
+    signature: res.data.signature,
+    jsApiList: ['scanQRCode']
+  });
+  wx.ready(() => {
+    alert('ready')
+  })
+  wx.error((err) => {
+    console.log('err', err)
+  })
+}
+
+wxInit()
+
+async function handleClick() {
+  wx.scanQRCode({
+    needResult: 1,
+    scanType: ["qrCode"],
+    success: function (res) {
+      var result = res.resultStr;
+      alert(result)
+    }
+  });
+}
 </script>
 
 <template>
   <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+    <button @click="handleClick">扫一扫</button>
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
+<style scoped></style>
