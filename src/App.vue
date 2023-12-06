@@ -11,7 +11,7 @@ async function wxInit() {
       url: location.href.split('#')[0]
     }
   })
-  wx.config({
+  window.wx.config({
     debug: true,
     appId: 'wx03ec3333acc0b717',
     timestamp: res.data.timestamp,
@@ -24,7 +24,7 @@ async function wxInit() {
 wxInit()
 
 async function handleClick() {
-  wx.scanQRCode({
+  window.wx.scanQRCode({
     needResult: 1,
     scanType: ["qrCode"],
     success: function (res) {
